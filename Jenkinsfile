@@ -95,6 +95,10 @@ EOF
          stage('Deploying to Development cluster') {
             steps {
                 sh '''
+                cur; ifconfig.co
+                echo
+                echo
+                
                 docker rm -f $(docker ps -aq)
                 docker run -itd -p 88:80 development:${BUILD_NUMBER}
                 curl localhost:88
