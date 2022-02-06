@@ -121,9 +121,9 @@ EOF
 
 def notifyUpgrade(String buildResult, String whereAt) {
   if (BRANCH == 'origin/develop') {
-    channel = 'foucus-group'
+    channel = 'focus-group'
   } else {
-    channel = 'foucus-group'
+    channel = 'focus-group'
   }
   if (buildResult == "SUCCESS") {
     switch(whereAt) {
