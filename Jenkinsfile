@@ -63,7 +63,7 @@ pipeline {
         }
         stage('Buiding docker images') {
             steps {
-                COMMIT=$(git rev-parse --short HEAD)
+               
                 docker build -t development:$BUILD_ID  -f apache.Dockerfile .
             }
         }
