@@ -1,6 +1,6 @@
 pipeline {
     agent {
-                label ("jenkins-node")
+                label ("master")
             }
     parameters {
    string(name: 'BRANCH',
@@ -14,14 +14,14 @@ pipeline {
         stage('Valading code syntax') {
             steps {
                 echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
         stage('testing code') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
          stage('Junit report') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
         stage('Sonarqube analysis') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -48,7 +48,7 @@ pipeline {
         stage('Sonarqube quality gate') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -63,17 +63,19 @@ pipeline {
         }
         stage('Buiding docker images') {
             steps {
-                COMMIT=$(git rev-parse --short HEAD)
-                docker build -t development:$BUILD_ID  -f apache.Dockerfile .
+               sh '''
+                docker build -t development:${BUILD_NUMBER}   .
+                '''
             }
         }
     
     
          stage('Generating compose file ') {
             steps {
+                sh'''
 cat <<EOF > docker-compose.yml
   httpd:
-       image: development:$BUILD_ID
+       image: development:${BUILD_NUMBER}
        expose:
         - 99
         - 80
@@ -85,12 +87,22 @@ cat <<EOF > docker-compose.yml
          CITY: Kathleen
          COUNTRY: U.S.A
 EOF
+
+'''
             }
         }
     
          stage('Deploying to Development cluster') {
             steps {
-                docker-compose up -d 
+                sh '''
+                curl ifconfig.co
+                echo
+                echo
+                
+                docker rm -f $(docker ps -aq)
+                docker run -itd -p 88:80 development:${BUILD_NUMBER}
+                curl localhost:88
+                sh '''
             }
         }
     
