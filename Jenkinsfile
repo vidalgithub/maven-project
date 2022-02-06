@@ -14,14 +14,14 @@ pipeline {
         stage('Valading code syntax') {
             steps {
                 echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
         stage('testing code') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -29,7 +29,7 @@ pipeline {
          stage('Junit report') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
         stage('Sonarqube analysis') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -48,7 +48,7 @@ pipeline {
         stage('Sonarqube quality gate') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 1'
             }
         }
 
@@ -95,7 +95,7 @@ EOF
          stage('Deploying to Development cluster') {
             steps {
                 sh '''
-                docker rm -f $(docker ps =aq)
+                docker rm -f $(docker ps -aq)
                 docker-compose up -d 
                 curl ifconfig.co
                 sh '''
