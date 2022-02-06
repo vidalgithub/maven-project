@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+                label ("jenkins-node")
+            }
     parameters {
    string(name: 'BRANCH',
            defaultValue: 'develop',
