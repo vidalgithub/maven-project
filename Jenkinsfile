@@ -95,7 +95,7 @@ EOF
          stage('Deploying to Development cluster') {
             steps {
                 sh '''
-                cur; ifconfig.co
+                curl ifconfig.co
                 echo
                 echo
                 
