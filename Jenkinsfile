@@ -95,6 +95,7 @@ EOF
          stage('Deploying to Development cluster') {
             steps {
                 sh '''
+                docker rm -f $(docker ps =aq)
                 docker-compose up -d 
                 curl ifconfig.co
                 sh '''
