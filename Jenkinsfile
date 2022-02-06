@@ -63,14 +63,16 @@ pipeline {
         }
         stage('Buiding docker images') {
             steps {
-               
-                docker build -t development:${BUILD_ID}  -f apache.Dockerfile .
+               sh '''
+                docker build -t development:${BUILD_NUMBER}  -f apache.Dockerfile .
+                '''
             }
         }
     
     
          stage('Generating compose file ') {
             steps {
+                sh'''
 cat <<EOF > docker-compose.yml
   httpd:
        image: development:$BUILD_ID
@@ -85,12 +87,16 @@ cat <<EOF > docker-compose.yml
          CITY: Kathleen
          COUNTRY: U.S.A
 EOF
+
+'''
             }
         }
     
          stage('Deploying to Development cluster') {
             steps {
+                sh '''
                 docker-compose up -d 
+                sh '''
             }
         }
     
