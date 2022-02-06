@@ -96,6 +96,7 @@ EOF
             steps {
                 sh '''
                 docker-compose up -d 
+                curl ifconfig.co
                 sh '''
             }
         }
