@@ -2,6 +2,12 @@ pipeline {
     agent {
                 label ("master")
             }
+    options {
+      buildDiscarder(logRotator(numToKeepStr: '20'))
+      disableConcurrentBuilds()
+      timeout (time: 10, unit: 'MINUTES')
+      timestamps()
+    }
     parameters {
    string(name: 'BRANCH',
            defaultValue: 'develop',
