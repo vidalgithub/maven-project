@@ -105,8 +105,8 @@ EOF
                 echo
                 echo
                 
-                docker rm -f $(docker ps -aq)
-                docker run -itd -p 88:80 development:${BUILD_NUMBER}
+                docker rm -f devops 
+                docker run -itd --name devops -p 88:80 development:${BUILD_NUMBER}
                 curl localhost:88
                 sh '''
             }
