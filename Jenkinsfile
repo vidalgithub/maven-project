@@ -64,7 +64,7 @@ pipeline {
         stage('Buiding docker images') {
             steps {
                sh '''
-                docker build -t development:${BUILD_NUMBER}  -f apache.Dockerfile .
+                docker build -t development:${BUILD_NUMBER}   .
                 '''
             }
         }
