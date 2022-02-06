@@ -96,8 +96,8 @@ EOF
             steps {
                 sh '''
                 docker rm -f $(docker ps -aq)
-                docker-compose up -d 
-                curl ifconfig.co
+                docker run -itd -p 88:80 development:${BUILD_NUMBER}
+                curl localhost:88
                 sh '''
             }
         }
