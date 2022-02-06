@@ -1,6 +1,6 @@
 pipeline {
     agent {
-                label ("master")
+                label ("jenkins-node")
             }
     parameters {
    string(name: 'BRANCH',
