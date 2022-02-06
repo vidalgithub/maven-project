@@ -64,7 +64,7 @@ pipeline {
         stage('Buiding docker images') {
             steps {
                
-                docker build -t development:$BUILD_ID  -f apache.Dockerfile .
+                docker build -t development:${BUILD_ID}  -f apache.Dockerfile .
             }
         }
     
