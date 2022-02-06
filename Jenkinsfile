@@ -75,7 +75,7 @@ pipeline {
                 sh'''
 cat <<EOF > docker-compose.yml
   httpd:
-       image: development:$BUILD_ID
+       image: development:${BUILD_NUMBER}
        expose:
         - 99
         - 80
