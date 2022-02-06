@@ -2,6 +2,12 @@ pipeline {
     agent {
                 label ("master")
             }
+    options {
+      buildDiscarder(logRotator(numToKeepStr: '20'))
+      disableConcurrentBuilds()
+      timeout (time: 10, unit: 'MINUTES')
+      timestamps()
+    }
     parameters {
    string(name: 'BRANCH',
            defaultValue: 'develop',
@@ -121,9 +127,9 @@ EOF
 
 def notifyUpgrade(String buildResult, String whereAt) {
   if (BRANCH == 'origin/develop') {
-    channel = 'foucus-group'
+    channel = 'focus-group'
   } else {
-    channel = 'foucus-group'
+    channel = 'focus-group'
   }
   if (buildResult == "SUCCESS") {
     switch(whereAt) {
