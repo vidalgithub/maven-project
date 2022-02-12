@@ -15,7 +15,7 @@ pipeline {
    
     string(name: 'tag',
            defaultValue: '1.6.0',
-           description: '''Enter the tag sent from TESTING team''')
+           description: '''Enter the tag sent from Dev team''')
 
   }
 
