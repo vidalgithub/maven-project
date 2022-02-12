@@ -1,6 +1,6 @@
 pipeline {
     agent {
-                label ("jenkins-node")
+                label ("Node1")
             }
 
     stages {
@@ -8,7 +8,7 @@ pipeline {
 
          stage('Valading code syntax') {
             steps {
-                echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
+                echo 'Hello'
                 sh 'sleep 5'
             }
         }
