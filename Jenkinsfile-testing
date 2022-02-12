@@ -5,9 +5,12 @@ pipeline {
     options {
       buildDiscarder(logRotator(numToKeepStr: '20'))
       disableConcurrentBuilds()
-      timeout (time: 10, unit: 'MINUTES')
+      timeout (time: 30, unit: 'MINUTES')
       timestamps()
     }
+
+
+
     parameters {
    string(name: 'BRANCH',
            defaultValue: 'develop',
@@ -23,8 +26,14 @@ pipeline {
   }
 
 
+
+
+
+
     stages {
-        stage('warning') {
+
+
+    stage('warning') {
         steps {
             script {
                 notifyUpgrade(currentBuild.currentResult, "WARNING")
@@ -32,6 +41,7 @@ pipeline {
                 }
             }
         }
+        
 
         stage('cloning repo') {
             steps {
@@ -39,15 +49,16 @@ pipeline {
                 sh 'sleep 1'
             }
         }
-
-
-         stage('Images scan test') {
+         
+   
+      stage('Images scan test') {
             steps {
                 echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
                 sh 'sleep 1'
             }
         }
 
+        
         stage('Security Test') {
             steps {
                 echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
@@ -70,9 +81,7 @@ pipeline {
                 sh 'sleep 1'
             }
         }
-
-
-
+        
 
         stage('Karnibal test') {
             steps {
@@ -81,7 +90,38 @@ pipeline {
             }
         }
 
-          
+
+
+       stage('Maturity test') {
+            steps {
+                sh'''
+             sleep 3
+                 '''
+            }
+        }
+    
+         stage('Functional test ') {
+            steps {
+                sh '''
+                sleep 3
+              
+                sh '''
+            }
+        }
+    
+
+
+        stage('Regression test') {
+            steps {
+                sh '''
+                sleep 3
+              
+                sh '''
+            }
+       
+        }  
+
+
 
         stage('Fuzzy test') {
             steps {
@@ -99,17 +139,9 @@ pipeline {
                 '''
             }
         }
-    
-    
-         stage('Maturity test') {
-            steps {
-                sh'''
-             sleep 3
-                 '''
-            }
-        }
-    
-         stage('Functional test ') {
+
+
+        stage('Selinux Regression test') {
             steps {
                 sh '''
                 sleep 3
@@ -117,34 +149,7 @@ pipeline {
                 sh '''
             }
         }
-    
     }
-
-        stage('Regression test') {
-            steps {
-                sh '''
-                sleep 3
-              
-                sh '''
-            }
-        }
-    
-    }
-
-
-      stage('Selinux Regression test') {
-            steps {
-                sh '''
-                sleep 3
-              
-                '''
-            }
-        }
-    
-    }
-
-
-
     post {
     always {
       script {
@@ -155,7 +160,15 @@ pipeline {
       deleteDir()
     }
   }
+
+
+
+
+
+
+
 }   
+
 
 def notifyUpgrade(String buildResult, String whereAt) {
   if (BRANCH == 'origin/develop') {
