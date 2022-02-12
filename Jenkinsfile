@@ -5,7 +5,7 @@ pipeline {
     options {
       buildDiscarder(logRotator(numToKeepStr: '20'))
       disableConcurrentBuilds()
-      timeout (time: 10, unit: 'MINUTES')
+      timeout (time: 30, unit: 'MINUTES')
       timestamps()
     }
     parameters {
@@ -13,7 +13,7 @@ pipeline {
            defaultValue: 'develop',
            description: '''branch''')
     string(name: 'WARNTIME',
-           defaultValue: '3',
+           defaultValue: '1',
            description: '''Warning time (in minutes) before starting upgrade''')
   }
     stages {
