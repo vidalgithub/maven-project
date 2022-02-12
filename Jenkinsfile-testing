@@ -64,7 +64,7 @@ pipeline {
         }
 
 
-         stage('load test Ubuntu server ) {
+         stage('load test Ubuntu server' ) {
             steps {
                 echo 'Hello World'
                 sh 'sleep 1'
