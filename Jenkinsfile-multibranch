@@ -9,7 +9,7 @@ pipeline {
          stage('Valading code syntax') {
             steps {
                 echo 'Hello'
-                sh 'sleep 5'
+                sh 'sleep 2'
             }
         }
 
@@ -18,7 +18,7 @@ pipeline {
          stage('testing code') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 2'
             }
         }
 
@@ -26,7 +26,7 @@ pipeline {
          stage('Junit report') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 2'
             }
         }
         
@@ -34,7 +34,7 @@ pipeline {
          stage('Sonarqube analysis') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 2'
             }
         }
 
@@ -43,7 +43,7 @@ pipeline {
         stage('Sonarqube quality gate') {
             steps {
                 echo 'Hello World'
-                sh 'sleep 5'
+                sh 'sleep 2'
             }
         }
 
@@ -51,11 +51,29 @@ pipeline {
             steps {
             sh '''
                 COMMIT=$(git rev-parse --short HEAD)
-                docker build -t $COMMIT-${BUILD_NUMBER}:$BUILD_ID  .
+                docker build -t $COMMIT-${BUILD_NUMBER}:${BUILD_NUMBER}  .
                 '''
             }
         }
         
+        
+        stage('Deploying to Development cluster') {
+            steps {
+                sh '''
+                curl ifconfig.co
+                echo
+                echo
+                 COMMIT=$(git rev-parse --short HEAD)
+                docker rm -f $COMMIT-${BUILD_NUMBER} || true 
+                docker run -itd --name $COMMIT-${BUILD_NUMBER}  -p ${BUILD_NUMBER}0:80 development:${BUILD_NUMBER}
+                docker ps | grep $COMMIT-${BUILD_NUMBER}
+              
+                sh '''
+            }
+        }
+    
+
+
 
     }
 }
