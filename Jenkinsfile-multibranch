@@ -51,7 +51,7 @@ pipeline {
             steps {
             sh '''
                 COMMIT=$(git rev-parse --short HEAD)
-                docker build -t $COMMIT-${BUILD_NUMBER}:${BUILD_NUMBER}  .
+                docker build -t development:${BUILD_NUMBER}  .
                 '''
             }
         }
