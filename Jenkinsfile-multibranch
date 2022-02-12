@@ -65,7 +65,7 @@ pipeline {
                 echo
                  COMMIT=$(git rev-parse --short HEAD)
                 docker rm -f $COMMIT-${BUILD_NUMBER} || true 
-                docker run -itd --name $COMMIT-${BUILD_NUMBER}  -p ${BUILD_NUMBER}0:80 development:${BUILD_NUMBER}
+                docker run -itd --name $COMMIT-${BUILD_NUMBER}  -P development:${BUILD_NUMBER}
                 docker ps | grep $COMMIT-${BUILD_NUMBER}
               
                 sh '''
