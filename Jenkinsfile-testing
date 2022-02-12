@@ -1,0 +1,189 @@
+pipeline {
+    agent {
+                label ("Node2")
+            }
+    options {
+      buildDiscarder(logRotator(numToKeepStr: '20'))
+      disableConcurrentBuilds()
+      timeout (time: 10, unit: 'MINUTES')
+      timestamps()
+    }
+    parameters {
+   string(name: 'BRANCH',
+           defaultValue: 'develop',
+           description: '''Do Not change this Leave it as it is''')
+
+    string(name: 'tag',
+           defaultValue: '1.6.0',
+           description: '''Enter the tag sent from TESTING team''')
+
+    string(name: 'WARNTIME',
+           defaultValue: '3',
+           description: '''Warning time (in minutes) before starting upgrade''')
+  }
+
+
+    stages {
+        stage('warning') {
+        steps {
+            script {
+                notifyUpgrade(currentBuild.currentResult, "WARNING")
+                sleep(time:env.WARNTIME, unit:"MINUTES")
+                }
+            }
+        }
+
+        stage('cloning repo') {
+            steps {
+                echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
+                sh 'sleep 1'
+            }
+        }
+
+
+         stage('Images scan test') {
+            steps {
+                echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
+                sh 'sleep 1'
+            }
+        }
+
+        stage('Security Test') {
+            steps {
+                echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
+                sh 'sleep 1'
+            }
+        }
+
+
+        stage('load test CentOS server ') {
+            steps {
+                echo 'Hello World'
+                sh 'sleep 1'
+            }
+        }
+
+
+         stage('load test Ubuntu server ) {
+            steps {
+                echo 'Hello World'
+                sh 'sleep 1'
+            }
+        }
+
+
+
+
+        stage('Karnibal test') {
+            steps {
+                echo 'Hello World'
+                sh 'sleep 1'
+            }
+        }
+
+          
+
+        stage('Fuzzy test') {
+            steps {
+                echo 'Hello World'
+                sh 'sleep 1'
+            }
+        }
+
+
+        
+        stage('End to End test') {
+            steps {
+               sh '''
+                sleep 3
+                '''
+            }
+        }
+    
+    
+         stage('Maturity test') {
+            steps {
+                sh'''
+             sleep 3
+                 '''
+            }
+        }
+    
+         stage('Functional test ') {
+            steps {
+                sh '''
+                sleep 3
+              
+                sh '''
+            }
+        }
+    
+    }
+
+        stage('Regression test') {
+            steps {
+                sh '''
+                sleep 3
+              
+                sh '''
+            }
+        }
+    
+    }
+
+
+      stage('Selinux Regression test') {
+            steps {
+                sh '''
+                sleep 3
+              
+                sh '''
+            }
+        }
+    
+    }
+
+
+
+    post {
+    always {
+      script {
+        notifyUpgrade(currentBuild.currentResult, "POST")
+      }
+    }
+    cleanup {
+      deleteDir()
+    }
+  }
+}   
+
+def notifyUpgrade(String buildResult, String whereAt) {
+  if (BRANCH == 'origin/develop') {
+    channel = 'focus-group'
+  } else {
+    channel = 'focus-group'
+  }
+  if (buildResult == "SUCCESS") {
+    switch(whereAt) {
+      case 'WARNING':
+        slackSend(channel: channel,
+                color: "#439FE0",
+                message: "TESTING-Alpha: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}")
+        break
+    case 'STARTING':
+      slackSend(channel: channel,
+                color: "good",
+                message: "TESTING-Alpha: Starting upgrade @ ${env.BUILD_URL}")
+      break
+    default:
+        slackSend(channel: channel,
+                color: "good",
+                message: "TESTING-Alpha: Upgrade completed successfully @ ${env.BUILD_URL}")
+        break
+    }
+  } else {
+    slackSend(channel: channel,
+              color: "danger",
+              message: "TESTING-Alpha: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}")
+    }
+}
