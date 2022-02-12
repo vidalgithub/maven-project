@@ -12,17 +12,11 @@ pipeline {
 
 
     parameters {
-   string(name: 'BRANCH',
-           defaultValue: 'develop',
-           description: '''Do Not change this Leave it as it is''')
-
+   
     string(name: 'tag',
            defaultValue: '1.6.0',
            description: '''Enter the tag sent from TESTING team''')
 
-    string(name: 'WARNTIME',
-           defaultValue: '3',
-           description: '''Warning time (in minutes) before starting upgrade''')
   }
 
 
@@ -33,15 +27,6 @@ pipeline {
     stages {
 
 
-    stage('warning') {
-        steps {
-            script {
-                notifyUpgrade(currentBuild.currentResult, "WARNING")
-                sleep(time:env.WARNTIME, unit:"MINUTES")
-                }
-            }
-        }
-        
 
         stage('cloning repo') {
             steps {
@@ -169,34 +154,3 @@ pipeline {
 
 }   
 
-
-def notifyUpgrade(String buildResult, String whereAt) {
-  if (BRANCH == 'origin/develop') {
-    channel = 'focus-group'
-  } else {
-    channel = 'focus-group'
-  }
-  if (buildResult == "SUCCESS") {
-    switch(whereAt) {
-      case 'WARNING':
-        slackSend(channel: channel,
-                color: "#439FE0",
-                message: "TESTING-Alpha: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}")
-        break
-    case 'STARTING':
-      slackSend(channel: channel,
-                color: "good",
-                message: "TESTING-Alpha: Starting upgrade @ ${env.BUILD_URL}")
-      break
-    default:
-        slackSend(channel: channel,
-                color: "good",
-                message: "TESTING-Alpha: Upgrade completed successfully @ ${env.BUILD_URL}")
-        break
-    }
-  } else {
-    slackSend(channel: channel,
-              color: "danger",
-              message: "TESTING-Alpha: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}")
-    }
-}
