@@ -20,6 +20,12 @@ options {
     string(name: 'tag',
            defaultValue: 'develop',
            description: '''Provide release tag''')
+
+    string(name: 'Name',
+           defaultValue: 'Stephanie',
+           description: '''Please enter your first and last name''')
+
+        
   }
 
     stages {
@@ -42,17 +48,17 @@ options {
           stage('Buiding docker images') {
             steps {
             sh '''
-                docker build -t devopseasylearning2021/aplha:$tag  .
+                docker build -t devopseasylearning2021/focus/aplha:$tag  .
                 '''
             }
         }
         
         
-        stage('push to nexus and dockerhub') {
+        stage('push to nexus') {
             steps {
                 sh '''
         docker login -u devopseasylearning2021 -p DevOps2021@
-        docker push devopseasylearning2021/aplha:$tag 
+        docker push devopseasylearning2021/focus/aplha:$tag 
               
                 '''
             }
@@ -83,7 +89,7 @@ options {
 
  post {
     success {
-      slackSend (channel: '#focus-group', color: 'good', message: "@here New release tag $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- Release $tag commited to github\n")
+      slackSend (channel: '#focus-group', color: 'good', message: "@here New realease certified by devt and request by $name\n Description: Release $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- Release $tag commited to github\n")
     }
 
     failure {
