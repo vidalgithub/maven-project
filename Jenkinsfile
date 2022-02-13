@@ -13,7 +13,7 @@ pipeline {
            defaultValue: 'develop',
            description: '''branch''')
     string(name: 'WARNTIME',
-           defaultValue: '1',
+           defaultValue: '5',
            description: '''Warning time (in minutes) before starting upgrade''')
   }
     stages {
