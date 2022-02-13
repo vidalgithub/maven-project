@@ -17,7 +17,7 @@ options {
            defaultValue: 'develop',
            description: '''Branch to build and deploy from''')
 
-    string(name: 'release-tag',
+    string(name: 'tag',
            defaultValue: 'develop',
            description: '''Provide release tag''')
   }
@@ -42,7 +42,7 @@ options {
           stage('Buiding docker images') {
             steps {
             sh '''
-                docker build -t devopseasylearning2021/focus/aplha:$release-tag  .
+                docker build -t devopseasylearning2021/focus/aplha:$tag  .
                 '''
             }
         }
@@ -52,7 +52,7 @@ options {
             steps {
                 sh '''
         docker login -u devopseasylearning2021 -p DevOps2021@
-        docker push devopseasylearning2021/focus/aplha:$release-tag 
+        docker push devopseasylearning2021/focus/aplha:$tag 
               
                 '''
             }
@@ -83,11 +83,11 @@ options {
 
  post {
     success {
-      slackSend (channel: '#focus-group', color: 'good', message: "@here New release tag ${release-tag}\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- release ${release-tag} commited to github\n")
+      slackSend (channel: '#focus-group', color: 'good', message: "@here New release tag $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- release $tag commited to github\n")
     }
 
     failure {
-      slackSend (channel: '#focus-group', color: 'danger', message: "@here ${release-tag} failed, please investigate")
+      slackSend (channel: '#focus-group', color: 'danger', message: "@here $tag failed, please investigate")
     }
 }
 
