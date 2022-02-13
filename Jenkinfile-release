@@ -48,7 +48,7 @@ options {
           stage('Buiding docker images') {
             steps {
             sh '''
-                docker build -t devopseasylearning2021/focus/aplha:$tag  .
+                docker build -t devopseasylearning2021/aplha:$tag  .
                 '''
             }
         }
@@ -58,7 +58,7 @@ options {
             steps {
                 sh '''
         docker login -u devopseasylearning2021 -p DevOps2021@
-        docker push devopseasylearning2021/focus/aplha:$tag 
+        docker push devopseasylearning2021/aplha:$tag 
               
                 '''
             }
