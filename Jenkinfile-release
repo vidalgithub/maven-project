@@ -83,7 +83,7 @@ options {
 
  post {
     success {
-      slackSend (channel: '#focus-group', color: 'good', message: "@here New release tag $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- release $tag commited to github\n")
+      slackSend (channel: '#focus-group', color: 'good', message: "@here New release tag $tag\n 1- Push to Nexus\n 2- Push to dockerhub\n 3- Release $tag commited to github\n")
     }
 
     failure {
