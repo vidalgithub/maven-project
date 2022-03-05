@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                 rm  -rf charts || true 
-                git clone -b eric https://github.com/devopseasylearning/charts.git
+                git clone -b eric https://github.com/devopseasylearning/chart-ingress-nginx.git
                 
                 '''
             }
@@ -34,8 +34,8 @@ pipeline {
             steps {
                 sh '''
                 ls -la 
-                cd charts/bitnami/nginx/
-                git checkout eric 
+                cd chart-ingress-nginx/nginx-ingress/
+
 cat <<EOF > testing_values.yaml
 image:
   tag: $tag
@@ -51,7 +51,7 @@ git pull origin eric
                 git config --global user.email "info@devopseasylearning.com"
                 git add  testing_values.yaml
                 git commit -m "adding new tag"
-                git push -v  https://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@github.com/devopseasylearning/charts.git
+                git push -v  https://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@github.com/devopseasylearning/chart-ingress-nginx.git
                 '''
 
             }
