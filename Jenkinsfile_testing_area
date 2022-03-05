@@ -38,7 +38,7 @@ pipeline {
 
 cat <<EOF > testing_values.yaml
 image:
-  tag: $tag
+  tag: testing-$tag
 EOF
 
 echo
