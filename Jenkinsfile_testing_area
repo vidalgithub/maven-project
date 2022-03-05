@@ -51,7 +51,7 @@ git pull origin eric
                 git config --global user.email "info@devopseasylearning.com"
                 git add  testing_values.yaml
                 git commit -m "adding new tag"
-                git push -u origin eric  https://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@github.com/devopseasylearning/charts.git
+                git push -f  https://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@github.com/devopseasylearning/charts.git
                 '''
 
             }
