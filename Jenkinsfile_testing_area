@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                 rm  -rf chart-ingress-nginx || true 
-                git clone  https://github.com/devopseasylearning/chart-ingress-nginx.git
+                git clone  git@github.com:devopseasylearning/chart-ingress-nginx.git
                 
                 '''
             }
@@ -51,7 +51,7 @@ echo
                 git config --global user.email "info@devopseasylearning.com"
                 git add  testing_values.yaml
                 git commit -m "adding new tag"
-                git push -v  https://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@github.com/devopseasylearning/chart-ingress-nginx.git
+                git push 
                 '''
 
             }
