@@ -11,7 +11,8 @@ pipeline {
                                 defaultValue: '', 
                                 name: 'tag', 
                                 trim: true
-                            )
+                            ),
+                            
                         ])
                     ])
                 }
@@ -56,6 +57,105 @@ echo
 
             }
         }
+
+
+       stage('deploying helm chart to K8S ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+       
+
+
+
+       stage('load test ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
+
+
+        stage('user test') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
+
+        stage('functional test ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
+
+
+       stage('End to End test ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
+
+       stage('Server test ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+        
+        stage('Regression test ') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+       stage('Fuzzy test') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
+
+       stage('Security test') {
+            steps {
+                sh '''
+                ls 
+                
+                '''
+            }
+        }
+
+
 
 
 
