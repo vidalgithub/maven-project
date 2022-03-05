@@ -22,7 +22,7 @@ pipeline {
          stage('clone the helm chart repo') {
             steps {
                 sh '''
-                rm  -rf charts || true 
+                rm  -rf chart-ingress-nginx || true 
                 git clone  https://github.com/devopseasylearning/chart-ingress-nginx.git
                 
                 '''
