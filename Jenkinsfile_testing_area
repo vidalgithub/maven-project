@@ -49,10 +49,9 @@ echo
 git pull origin eric
                 git config --global user.name "devopseasylearning"
                 git config --global user.email "info@devopseasylearning.com"
-                git add  .
+                git add  testing_values.yaml
                 git commit -m "adding new tag"
-                git branch
-                git push https://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@github.com/devopseasylearning/charts.git
+                git push -u origin eric  https://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@github.com/devopseasylearning/charts.git
                 '''
 
             }
