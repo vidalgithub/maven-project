@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    stages {
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                       
+                            string(
+                                defaultValue: '', 
+                                name: 'tag', 
+                                trim: true
+                            )
+                        ])
+                    ])
+                }
+            }
+        }
+
+
+         stage('clone the helm chart repo') {
+            steps {
+                sh '''
+                rm  -rf charts || true 
+                git clone -b eric https://github.com/devopseasylearning/charts.git
+                cd charts
+                '''
+            }
+        }
+
+
+          stage('Update helm chart') {
+            steps {
+                sh '''
+                cd bitnami/nginx/
+cat <<EOF > testing_values.yaml
+image:
+  tag: $tag
+EOF
+
+                '''
+
+            }
+        }
+
+
+        stage('commit to github') {
+            steps {
+                sh '''
+                git pull --all
+                git config --global user.name "devopseasylearning"
+                git config --global user.email "info@devopseasylearning.com"
+                git add  .
+                git commit -m "adding new tag"
+                git push https://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@github.com/devopseasylearning/charts.git
+
+                '''
+            }
+        }
+
+
+    }   
+}
+
+
+
