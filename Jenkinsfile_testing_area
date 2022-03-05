@@ -49,7 +49,7 @@ EOF
         stage('commit to github') {
             steps {
                 sh '''
-                git pull --all
+                git pull origin eric
                 git config --global user.name "devopseasylearning"
                 git config --global user.email "info@devopseasylearning.com"
                 git add  .
