@@ -35,31 +35,29 @@ pipeline {
                 sh '''
                 ls -la 
                 cd charts/bitnami/nginx/
+                git checkout eric 
 cat <<EOF > testing_values.yaml
 image:
   tag: $tag
 EOF
 
-                '''
+echo
+cat testing_values.yaml
+echo 
+echo 
 
-            }
-        }
-
-
-        stage('commit to github') {
-            steps {
-                sh '''
-                git pull origin eric
+git pull origin eric
                 git config --global user.name "devopseasylearning"
                 git config --global user.email "info@devopseasylearning.com"
                 git add  .
                 git commit -m "adding new tag"
                 git branch
                 git push https://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@github.com/devopseasylearning/charts.git
-
                 '''
+
             }
         }
+
 
 
     }   
