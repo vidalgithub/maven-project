@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                 rm  -rf charts || true 
                 git clone -b eric https://github.com/devopseasylearning/charts.git
-                cd charts
+                
                 '''
             }
         }
@@ -33,7 +33,8 @@ pipeline {
           stage('Update helm chart') {
             steps {
                 sh '''
-                cd bitnami/nginx/
+                ls -la 
+                cd charts/bitnami/nginx/
 cat <<EOF > testing_values.yaml
 image:
   tag: $tag
