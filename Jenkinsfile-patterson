@@ -84,22 +84,20 @@ stage('test') {
             }
         }
 
-stage('package and push ') {
- 
+stage('package') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
             steps {
                sh '''
-            docker run -i --rm -v $PWD:/git --platform linux/arm64/v8  -w /git devopseasylearning2021/student:002 bash -c " mvn package ; \
-            ls -l webapp  ; \
-              cd webapp/target  ; \
-              cp -r /root/clone.sh  . ; \
-              chmod +x clone.sh ; \
-              bash clone.sh "
+            
+              mvn package
+              ls -l webapp/target
+              pwd
                '''
             }
         }
-
-
 
 stage('verify') {
     agent {
@@ -150,10 +148,7 @@ stage('build ') {
 
             steps {
                sh '''
-               rm -rf maven-project || true
-               git clone https://github.com/devopseasylearning/maven-project.git
-               cd maven-project
-               docker build -t devopseasylearning2021/eric:$ImageTAG .
+           docker build -t devopseasylearning2021/eric:$ImageTAG .
                '''
             }
         }
@@ -183,37 +178,5 @@ stage('build ') {
 
 
 
-            stage('deploy with compose') {
-
-            steps {
-                sh '''
-docker-compose down || true 
-docker rm -f odilia || true
-rm -rf docker-compose.yml || true
-
-cat <<EOF > docker-compose.yml
-docker rmi -f devopseasylearning2021/eric:$ImageTAG || true 
-version: "3"
-services:
-    tomcat:
-       image: devopseasylearning2021/eric:$ImageTAG 
-       container_name: odilia
-       expose:
-        - 80
-       ports:
-         - 85:80
-EOF
-
-cat docker-compose.yml
-docker compose up -d
-docker-compose ps 
-
-curl ifconfig.co
-'''
-            }
-        }
-
     }
 }
-
-
