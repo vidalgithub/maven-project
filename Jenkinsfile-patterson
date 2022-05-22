@@ -93,7 +93,7 @@ stage('package') {
                sh '''
             cd $WORKSPACE
               pwd
-              docker run -i --rm --user root  devopseasylearning2021/s2:004  bash -c " whoami ;  ls -l ; pwd  ; ls -l git ;  bash clone.sh " 
+              docker run -i --rm --user root  devopseasylearning2021/s2:004  bash -c " whoami ;  ls -l ; pwd  ; ls -l git ; cd git ; pwd ;  bash clone.sh " 
                '''
             }
         }
