@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent node1
    
    environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
@@ -33,68 +33,65 @@ pipeline {
 
 
 
-        stage('clean') {
-            agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+//         stage('clean') {
+//             agent {
+//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
+//              }
 
-            steps {
-               sh '''
-               rm -rf webapp/target/webapp.war || true
-              mvn clean
-               '''
-            }
-        }
+//             steps {
+//                sh '''
+//                rm -rf webapp/target/webapp.war || true
+//               mvn clean
+//                '''
+//             }
+//         }
 
-        stage('compile') {
-            agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+//         stage('compile') {
+//             agent {
+//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
+//              }
 
-            steps {
-               sh '''
-             mvn compile
-               '''
-            }
-        }
+//             steps {
+//                sh '''
+//              mvn compile
+//                '''
+//             }
+//         }
 
-stage('validate') {
-    agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+// stage('validate') {
+//     agent {
+//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
+//              }
 
-            steps {
-               sh '''
-               mvn validate
-               '''
-            }
-        }
+//             steps {
+//                sh '''
+//                mvn validate
+//                '''
+//             }
+//         }
 
 
 
-stage('test') {
-    agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+// stage('test') {
+//     agent {
+//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
+//              }
 
-            steps {
-               sh '''
-             mvn test 
-               '''
-            }
-        }
+//             steps {
+//                sh '''
+//              mvn test 
+//                '''
+//             }
+//         }
 
 stage('package') {
-    agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+
 
             steps {
                sh '''
-            
-              mvn package
-              ls -l webapp/target
+            cd $WORKSPACE
               pwd
+              docker run -i --rm -v $PWD:/git -w /git devopseasylearning2021/s2:001  mvn clean ; mvn package ; cp -r /root/clone.sh  /git ; bash clone.sh 
                '''
             }
         }
