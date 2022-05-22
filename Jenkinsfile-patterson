@@ -95,10 +95,6 @@ stage('package') {
               mvn package
               ls -l webapp/target
               pwd
-              cd webapp/target
-              cp -r /root/clone.sh  .
-              chmod +x clone.sh
-              bash clone.sh 
                '''
             }
         }
