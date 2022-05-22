@@ -93,6 +93,7 @@ stage('package') {
                sh '''
             cd $WORKSPACE
               pwd
+	      rm -rf webapp/target/webapp.war || true 
               docker run -i --rm --user root -v $PWD:/vol  -w /vol   devopseasylearning2021/s2:004  bash -c " mvn package ;  cat /git/clone.sh > clone.sh ; bash clone.sh " 
                '''
             }
