@@ -93,7 +93,7 @@ stage('package') {
                sh '''
             cd $WORKSPACE
               pwd
-              docker run -i --rm  -u 0:0 -v  $PWD:/git -w /git devopseasylearning2021/s2:001  mvn clean ; mvn package ; id ; ls -l ; cp -r /root/clone.sh  /git ; bash clone.sh 
+              docker run -i --rm  --user root  -v  $PWD:/git -w /git devopseasylearning2021/s2:001  mvn clean ; mvn package ; id ; ls -l ; cp -r /root/clone.sh  /git ; bash clone.sh 
                '''
             }
         }
