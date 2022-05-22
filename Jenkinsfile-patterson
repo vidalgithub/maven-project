@@ -86,7 +86,7 @@ stage('test') {
 
 stage('package') {
     agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -102,6 +102,21 @@ stage('package') {
                '''
             }
         }
+
+
+stage('update github') {
+
+            steps {
+               sh '''
+              ls -l webapp/target
+              cd webapp/target
+              docker run -i --rm -v $PWD:/git -w git devopseasylearning2021/student:001 bash -c " cp -r /root/clone.sh  . ; \
+              chmod +x clone.sh ; \
+              bash clone.sh 
+               '''
+            }
+        }
+
 
 
 stage('verify') {
