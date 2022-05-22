@@ -84,33 +84,17 @@ stage('test') {
             }
         }
 
-stage('package') {
-    agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
-             }
+stage('package and push ') {
+ 
 
             steps {
                sh '''
-            
-              mvn package
-              ls -l webapp/target
-              pwd
-               '''
-            }
-        }
-
-
-stage('update github') {
-
-            steps {
-               sh '''
-	       cd $WORKSPACE
-	       pwd
-              ls -l 
-              ls -ltr webapp/
-              docker run -i --rm -v $PWD:/git -w git devopseasylearning2021/student:001 bash -c " cp -r /root/clone.sh  . ; \
+            docker run -i --rm -v $PWD:/git -w /git devopseasylearning2021/student:002 bash -c " mvn package ; \
+            ls -l webapp  ; \
+              cd webapp/target  ; \
+              cp -r /root/clone.sh  . ; \
               chmod +x clone.sh ; \
-              bash clone.sh 
+              bash clone.sh "
                '''
             }
         }
