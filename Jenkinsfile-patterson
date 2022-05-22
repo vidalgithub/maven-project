@@ -35,7 +35,7 @@ pipeline {
 
         stage('clean') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -48,7 +48,7 @@ pipeline {
 
         stage('compile') {
             agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -60,7 +60,7 @@ pipeline {
 
 stage('validate') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -74,7 +74,7 @@ stage('validate') {
 
 stage('test') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -86,7 +86,7 @@ stage('test') {
 
 stage('package') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -95,13 +95,18 @@ stage('package') {
               mvn package
               ls -l webapp/target
               pwd
+              cd webapp/target
+              cp -r /root/clone.sh  .
+              chmod +x clone.sh
+              bash clone.sh 
                '''
             }
         }
 
+
 stage('verify') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -114,7 +119,7 @@ stage('verify') {
 
 stage('install') {
     agent {
-                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+                 docker { image 'devopseasylearning2021/student:001' }
              }
 
             steps {
@@ -148,7 +153,10 @@ stage('build ') {
 
             steps {
                sh '''
-           docker build -t devopseasylearning2021/eric:$ImageTAG .
+               rm -rf maven-project || true
+               git clone https://github.com/devopseasylearning/maven-project.git
+               cd maven-project
+               docker build -t devopseasylearning2021/eric:$ImageTAG .
                '''
             }
         }
@@ -202,6 +210,8 @@ EOF
 cat docker-compose.yml
 docker compose up -d
 docker-compose ps 
+
+curl ifconfig.co
 '''
             }
         }
