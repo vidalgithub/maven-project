@@ -107,7 +107,7 @@ stage('update github') {
 	       cd $WORKSPACE
 	       pwd
               ls -l 
-              cd webapp/target
+              ls -ltr webapp/
               docker run -i --rm -v $PWD:/git -w git devopseasylearning2021/student:001 bash -c " cp -r /root/clone.sh  . ; \
               chmod +x clone.sh ; \
               bash clone.sh 
