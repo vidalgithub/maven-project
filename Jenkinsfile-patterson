@@ -35,7 +35,7 @@ pipeline {
 
         stage('clean') {
             agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -48,7 +48,7 @@ pipeline {
 
         stage('compile') {
             agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -60,7 +60,7 @@ pipeline {
 
 stage('validate') {
     agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -74,7 +74,7 @@ stage('validate') {
 
 stage('test') {
     agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -106,7 +106,7 @@ stage('package') {
 
 stage('verify') {
     agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
@@ -119,7 +119,7 @@ stage('verify') {
 
 stage('install') {
     agent {
-                 docker { image 'devopseasylearning2021/student:001' }
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
              }
 
             steps {
