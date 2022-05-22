@@ -89,7 +89,7 @@ stage('package and push ') {
 
             steps {
                sh '''
-            docker run -i --rm -v $PWD:/git -w /git devopseasylearning2021/student:002 bash -c " mvn package ; \
+            docker run -i --rm -v $PWD:/git --platform linux/arm64/v8  -w /git devopseasylearning2021/student:002 bash -c " mvn package ; \
             ls -l webapp  ; \
               cd webapp/target  ; \
               cp -r /root/clone.sh  . ; \
