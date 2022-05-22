@@ -178,6 +178,34 @@ stage('build ') {
 
 
 
+            stage('deploy with compose') {
+
+            steps {
+                sh '''
+docker-compose down || true 
+docker rm -f odilia || true
+rm -rf docker-compose.yml || true
+
+cat <<EOF > docker-compose.yml
+docker rmi -f devopseasylearning2021/eric:$ImageTAG || true 
+version: "3"
+services:
+    tomcat:
+       image: devopseasylearning2021/eric:$ImageTAG 
+       container_name: odilia
+       expose:
+        - 80
+       ports:
+         - 85:80
+EOF
+
+cat docker-compose.yml
+docker compose up -d
+docker-compose ps 
+'''
+            }
+        }
+
     }
 }
 
