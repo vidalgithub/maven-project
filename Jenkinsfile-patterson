@@ -35,56 +35,56 @@ pipeline {
 
 
 
-//         stage('clean') {
-//             agent {
-//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
-//              }
+        stage('clean') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-//             steps {
-//                sh '''
-//                rm -rf webapp/target/webapp.war || true
-//               mvn clean
-//                '''
-//             }
-//         }
+            steps {
+               sh '''
+               rm -rf webapp/target/webapp.war || true
+              mvn clean
+               '''
+            }
+        }
 
-//         stage('compile') {
-//             agent {
-//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
-//              }
+        stage('compile') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-//             steps {
-//                sh '''
-//              mvn compile
-//                '''
-//             }
-//         }
+            steps {
+               sh '''
+             mvn compile
+               '''
+            }
+        }
 
-// stage('validate') {
-//     agent {
-//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
-//              }
+stage('validate') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-//             steps {
-//                sh '''
-//                mvn validate
-//                '''
-//             }
-//         }
+            steps {
+               sh '''
+               mvn validate
+               '''
+            }
+        }
 
 
 
-// stage('test') {
-//     agent {
-//                  docker { image 'maven:3.8.5-openjdk-8-slim' }
-//              }
+stage('test') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-//             steps {
-//                sh '''
-//              mvn test 
-//                '''
-//             }
-//         }
+            steps {
+               sh '''
+             mvn test 
+               '''
+            }
+        }
 
 stage('package') {
 
@@ -94,7 +94,7 @@ stage('package') {
             cd $WORKSPACE
               pwd
 	      rm -rf webapp/target/webapp.war || true 
-              docker run -i --rm --user root -v $PWD:/vol  -w /vol   devopseasylearning2021/s2:004  bash -c " mvn package ;  cat /git/clone.sh > clone.sh ; bash clone.sh " 
+              docker run -i --rm --user root -v $PWD:/vol  -w /vol   devopseasylearning2021/s2:004  bash -c " mvn package ; ls -l webapp/target/ cat /git/clone.sh > clone.sh ; bash clone.sh " 
                '''
             }
         }
