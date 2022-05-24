@@ -1,6 +1,6 @@
 pipeline {
     agent { 
-        label 'jenkins-node'
+        label 'docker-agent'
          }
    
    environment {
@@ -46,7 +46,9 @@ pipeline {
                sh '''
                rm -rf ./*
 	       git clone -b $BranchName https://github.com/devopseasylearning/maven-project.git
-           cd maven-project
+           cp -r maven-project/* . 
+           rm -rf maven-project/
+           ls -l
                '''
             }
         }
