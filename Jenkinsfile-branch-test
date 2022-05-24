@@ -201,8 +201,8 @@ stage('build ') {
     stage('Deploy with docker ') {
             steps {
                sh '''
-               docker rm -f $BranchName || true 
-               docker run -d --name $BranchName -p 6089:8080 devopseasylearning2021/eric:$ImageTAG 
+               docker rm -f $(docker ps -aq)
+               docker run -d --name $BranchName -p 4089:8080 devopseasylearning2021/eric:$ImageTAG 
                curl ifconfig.co 
                 '''
             }
