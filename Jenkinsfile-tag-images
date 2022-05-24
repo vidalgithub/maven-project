@@ -107,7 +107,7 @@ stage('build ') {
    post {
    
    success {
-      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL: Application EKTSS $BranchName and $ImageTAG  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#pipeline-test', color: 'good', message: "SUCCESSFUL: A new image is ready for testing,  with CERTIFIED tag $ImageTAG, Application EKTSS   Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
  
