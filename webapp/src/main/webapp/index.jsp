@@ -373,7 +373,8 @@ Alternatively if you want to just have a single hero
                     <div class="px-3 md:px-0">
                         <h3 class="font-bold text-gray-900">About</h3>
                         <p class="py-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus commodo nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
+                            Welcome to Devops Easy Learning and EK TECH SOFTWARE SOLUTION Shopping website.
+                            From here we will CRACK Devops.
                         </p>
                     </div>
                 </div>
