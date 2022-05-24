@@ -439,16 +439,16 @@ stage('build ') {
      post {
    
    success {
-      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL, Application MONEY on branch $BranchName  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL, Application MONEY  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
  
     unstable {
-      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE, Application MONEY on branch $BranchName Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE, Application MONEY Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
     failure {
-      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE, Application MONEY  on branch $BranchName Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE, Application MONEY  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
    
     cleanup {
