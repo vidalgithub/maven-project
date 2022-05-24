@@ -42,7 +42,7 @@ pipeline {
 
             steps {
                sh '''
-               rm -rf webapp/target/webapp.war || true
+               rm -rf webapp/target/webapp.war
               mvn clean
                '''
             }
