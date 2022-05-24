@@ -54,7 +54,15 @@ pipeline {
         }
 
 
+        stage('clean') {
+          
 
+            steps {
+               sh '''
+	       mvn clean install package
+               '''
+            }
+        }
 
 stage('build ') {
 
