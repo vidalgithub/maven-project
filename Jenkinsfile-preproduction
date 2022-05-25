@@ -1,93 +1,161 @@
 pipeline {
-    agent {
-                label ("Node2")
-            }
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '20'))
-      disableConcurrentBuilds()
-      timeout (time: 30, unit: 'MINUTES')
-      timestamps()
-    }
-    parameters {
-   string(name: 'BRANCH',
-           defaultValue: 'develop',
-           description: '''branch''')
-    string(name: 'WARNTIME',
-           defaultValue: '1',
-           description: '''Warning time (in minutes) before starting upgrade''')
-  }
-    stages {
+    agent { 
+        label 'jenkins-docker2'
+         }
+   
+   environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 
-        stage('warning') {
-        steps {
-            script {
-                notifyUpgrade(currentBuild.currentResult, "WARNING")
-                sleep(time:env.WARNTIME, unit:"MINUTES")
+    options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
+     artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
+      disableConcurrentBuilds() }
+      
+
+    stages {
+        
+       stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                          
+
+                            string(
+                                defaultValue: '001', 
+                                name: 'ImageTAG', 
+                                trim: true
+                            ),
+
+                            string(name: 'WARNTIME',
+                             defaultValue: '2',
+                            description: '''Warning time (in minutes) before starting upgrade'''),
+
+                             
+                         
+                          string(
+                                defaultValue: 'develop',
+                                name: 'Please_leave_this_section_as_it_is',
+                                trim: true
+                            ),
+                        ])
+                    ])
                 }
             }
         }
 
+     
 
-    
-        stage('cleaning environment') {
-            steps {
-                echo 'Hello World'
-                sh 'sleep 1'
-            }
+     //////////////////////////////////
+       stage('warning') {
+      steps {
+        script {
+            notifyUpgrade(currentBuild.currentResult, "WARNING")
+            sleep(time:env.WARNTIME, unit:"MINUTES")
         }
-
-
-         stage('deploying') {
-            steps {
-                echo 'Hello World'
-                sh 'sleep 1'
-            }
-        }
-
-   
-    
+      }
     }
-    post {
+
+        
+   
+   stage('pull image') {
+        
+            steps {
+               sh '''
+	      docker rmi -f devopseasylearning2021/production:$ImageTAG || true 
+          docker pull  devopseasylearning2021/production:$ImageTAG
+               '''
+            }
+        }
+
+
+
+    stage('Generationg compose file') {
+            steps {
+               sh '''
+rm -rf docker-compose.yml || true 
+cat <<EOF > docker-compose.yml
+version: "3"
+services:
+    money:
+       image: devopseasylearning2021/production:$ImageTAG 
+       container_name: money
+       expose:
+        - 8080
+       ports:
+         - 9089:8080
+
+EOF
+
+ls -l 
+                '''
+            }
+        }
+
+    stage('Deploy with compose ') {
+            steps {
+               sh '''
+docker-compose down || true 
+docker-compose up -d 
+docker-compose ps 
+curl ifconfig.co 
+                '''
+            }
+        }
+
+
+    }
+
+
+
+ 
+ post {
     always {
       script {
         notifyUpgrade(currentBuild.currentResult, "POST")
       }
     }
-    cleanup {
-      deleteDir()
-    }
+    
   }
-}   
+
+
+
+
+}
+
+
+
+
+
+
 
 def notifyUpgrade(String buildResult, String whereAt) {
-  if (BRANCH == 'origin/develop') {
-    channel = 'focus-group'
+  if (Please_leave_this_section_as_it_is == 'origin/develop') {
+    channel = 'development-alerts'
   } else {
-    channel = 'focus-group'
+    channel = 'development-alerts'
   }
   if (buildResult == "SUCCESS") {
     switch(whereAt) {
       case 'WARNING':
         slackSend(channel: channel,
                 color: "#439FE0",
-                message: "PRE-PRODUCTION-Alpha: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}")
+                message: "PREPROD-MONEY: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}  Application MONEY")
         break
     case 'STARTING':
       slackSend(channel: channel,
                 color: "good",
-                message: "PRE-PRODUCTION-Alpha: Starting upgrade @ ${env.BUILD_URL}")
+                message: "PREPROD-MONEY: Starting upgrade @ ${env.BUILD_URL} Application MONEY")
       break
     default:
         slackSend(channel: channel,
                 color: "good",
-                message: "PRE-PRODUCTION-Alpha: Upgrade completed successfully @ ${env.BUILD_URL}")
+                message: "PREPROD-MONEY: Upgrade completed successfully @ ${env.BUILD_URL}  Application MONEY")
         break
     }
   } else {
     slackSend(channel: channel,
               color: "danger",
-              message: "PRE-PRODUCTION-Alpha: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}")
-    }
+              message: "PREPROD-MONEY: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}  Application MONEY")
+  }
 }
-
-
