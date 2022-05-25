@@ -1,79 +1,184 @@
 pipeline {
-    agent {
-                label ("node1")
-            }
+    agent { 
+        label 'node1, node2, node3'
+         }
+   
+  
+    options { buildDiscarder(logRotator(artifactDaysToKeepStr: '',
+     artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
+      disableConcurrentBuilds() }
+      
 
     stages {
-     
-
-         stage('Valading code syntax') {
-            steps {
-                echo 'Hello'
-                sh 'sleep 2'
-            }
-        }
-
-
-
-         stage('testing code') {
-            steps {
-                echo 'Hello World'
-                sh 'sleep 2'
-            }
-        }
-
-
-         stage('Junit report') {
-            steps {
-                echo 'Hello World'
-                sh 'sleep 2'
-            }
-        }
         
+    
+    
+        stage('clean') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-         stage('Sonarqube analysis') {
             steps {
-                echo 'Hello World'
-                sh 'sleep 2'
+               sh '''
+	       rm -rf webapp.war
+               rm -rf webapp/target/
+	      ls -l webapp
+              mvn clean
+               '''
             }
         }
 
-          
+        stage('compile') {
+            agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
 
-        stage('Sonarqube quality gate') {
             steps {
-                echo 'Hello World'
-                sh 'sleep 2'
+               sh '''
+             mvn compile
+               '''
             }
         }
 
-          stage('Buiding docker images') {
+stage('validate') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
             steps {
-            sh '''
-                COMMIT=$(git rev-parse --short HEAD)
-                docker build -t development:${BUILD_NUMBER}  .
-                '''
+               sh '''
+               mvn validate
+               '''
             }
         }
-        
-        
-        stage('Deploying to Development cluster') {
+
+
+
+stage('test') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
             steps {
-                sh '''
-                curl ifconfig.co
-                echo
-                echo
-                 COMMIT=$(git rev-parse --short HEAD)
-                docker rm -f $COMMIT-${BUILD_NUMBER} || true 
-                docker run -itd --name $COMMIT-${BUILD_NUMBER}  -P development:${BUILD_NUMBER}
-                docker ps | grep $COMMIT-${BUILD_NUMBER}
-              
-                sh '''
+               sh '''
+             mvn test 
+               '''
             }
         }
+
+stage('package') {
+
+
+            steps {
+               sh '''
+         mvn package
+	 ls -l webapp/
+	 ls -l webapp/target/
+               '''
+            }
+        }
+
+stage('verify') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+              mvn verify
+               '''
+            }
+        }
+
+
+stage('install') {
+    agent {
+                 docker { image 'maven:3.8.5-openjdk-8-slim' }
+             }
+
+            steps {
+               sh '''
+           mvn install
+               '''
+            }
+        }
+       
+       stage('SonarQube analysis') {
+            agent {
+                docker {
+
+                  image 'sonarsource/sonar-scanner-cli:4.7.0'
+                }
+               }
+               environment {
+        CI = 'true'
+        scannerHome='/opt/sonar-scanner'
+    }
+            steps{
+                withSonarQubeEnv('Sonar') {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+
+
+
+stage('build ') {
+
+            steps {
+               sh '''
+           docker build -t devopseasylearning2021/eric:$ImageTAG .
+               '''
+            }
+        }
+       
+
+
+
+            
+
+   post {
+   
+   success {
+      slackSend (channel: '#development-alerts', color: 'good', message: "SUCCESSFUL:  Branch name  <<${env.BRANCH_NAME}>>  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    }
+
+ 
+    unstable {
+      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE:  Branch name  <<${env.BRANCH_NAME}>>  Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    }
+
+    failure {
+      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE:  Branch name  <<${env.BRANCH_NAME}>> Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+    }
+   
+    cleanup {
+      deleteDir()
+    }
+}
+
+
     
 
 
 
     }
+
+
+
+ 
+ post {
+    always {
+      script {
+        notifyUpgrade(currentBuild.currentResult, "POST")
+      }
+    }
+    
+  }
+
+
+
+
 }
+
+
