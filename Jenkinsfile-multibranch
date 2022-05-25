@@ -1,6 +1,6 @@
 pipeline {
     agent { 
-        label 'node1, node2, node3'
+        label 'main'
          }
    
   
@@ -127,14 +127,14 @@ stage('build ') {
 
             steps {
                sh '''
-           docker build -t devopseasylearning2021/eric:$ImageTAG .
+           docker build -t devopseasylearning2021/eric:${BUILD_NUMBER} .
                '''
             }
         }
        
 
 
-}
+    }
             
 
    post {
@@ -166,19 +166,5 @@ stage('build ') {
 
 
 
- 
- post {
-    always {
-      script {
-        notifyUpgrade(currentBuild.currentResult, "POST")
-      }
-    }
-    
-  }
-
-
-
-
-}
 
 
