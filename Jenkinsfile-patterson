@@ -252,22 +252,22 @@ def notifyUpgrade(String buildResult, String whereAt) {
       case 'WARNING':
         slackSend(channel: channel,
                 color: "#439FE0",
-                message: "MONEY: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}  Application CHALLENGER")
+                message: "MONEY: Upgrade starting in ${env.WARNTIME} minutes @ ${env.BUILD_URL}  Application MONEY")
         break
     case 'STARTING':
       slackSend(channel: channel,
                 color: "good",
-                message: "MONEY: Starting upgrade @ ${env.BUILD_URL} Application CHALLENGER")
+                message: "MONEY: Starting upgrade @ ${env.BUILD_URL} Application MONEY")
       break
     default:
         slackSend(channel: channel,
                 color: "good",
-                message: "MONEY: Upgrade completed successfully @ ${env.BUILD_URL}  Application CHALLENGER")
+                message: "MONEY: Upgrade completed successfully @ ${env.BUILD_URL}  Application MONEY")
         break
     }
   } else {
     slackSend(channel: channel,
               color: "danger",
-              message: "MONEY: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}  Application CHALLENGER")
+              message: "MONEY: Upgrade was not successful. Please investigate it immediately.  @ ${env.BUILD_URL}  Application MONEY")
   }
 }
