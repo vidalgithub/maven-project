@@ -60,8 +60,8 @@ pipeline {
         
             steps {
                sh '''
-	      docker rmi -f devopseasylearning2021:$ImageTAG || true 
-          docker pull  devopseasylearning2021:$ImageTAG
+	      docker rmi -f devopseasylearning2021/production:$ImageTAG || true 
+          docker pull  devopseasylearning2021/production:$ImageTAG
                '''
             }
         }
