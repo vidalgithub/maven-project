@@ -70,7 +70,7 @@ pipeline {
         
             steps {
                sh '''
-             mvn compile
+             ls
                '''
             }
         }
@@ -79,7 +79,7 @@ stage('Test2') {
 
             steps {
                sh '''
-               mvn validate
+               ls
                '''
             }
         }
@@ -90,7 +90,7 @@ stage('Test3') {
 
             steps {
                sh '''
-             mvn test 
+              ls
                '''
             }
         }
@@ -100,9 +100,7 @@ stage('test4') {
 
             steps {
                sh '''
-         mvn package
-	 ls -l webapp/
-	 ls -l webapp/target/
+              ls
                '''
             }
         }
@@ -111,7 +109,7 @@ stage('Test5') {
 
             steps {
                sh '''
-              mvn verify
+               ls
                '''
             }
         }
@@ -121,7 +119,7 @@ stage('Test6') {
 
             steps {
                sh '''
-           mvn install
+            ls
                '''
             }
         }
