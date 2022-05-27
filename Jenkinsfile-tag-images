@@ -107,16 +107,16 @@ stage('build ') {
    post {
    
    success {
-      slackSend (channel: '#pipeline-test', color: 'good', message: "SUCCESSFUL: A new image is ready for testing,  with CERTIFIED tag $ImageTAG, Application EKTSS   Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#testing-alerts', color: 'good', message: "SUCCESSFUL: A new image is ready for testing,  with CERTIFIED tag $ImageTAG, Application MONEY   Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
  
     unstable {
-      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE: Application EKTSS $BranchName  $ImageTAG Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: 'warning', message: "UNSTABLE: Application MONEY $BranchName  $ImageTAG Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
 
     failure {
-      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE: Application EKTSS $BranchNameJob  $ImageTAG '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+      slackSend (channel: '#development-alerts', color: '#FF0000', message: "FAILURE: Application MONEY $BranchNameJob  $ImageTAG '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
    
     cleanup {
