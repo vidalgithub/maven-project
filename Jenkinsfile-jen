@@ -2,14 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('cleaning environment') {
-            steps {
-                sh '''
-                docker rm -f $docker ps -aq
-                '''
-            }
-        }
-
         stage('build the image') {
             steps {
                 sh '''
