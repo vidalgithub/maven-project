@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('build image') {
+            steps {
+                sh '''
+                mkdir yvan
+                pwd
+                date
+
+                '''
+            }
+        
+        }
+   
+   stage('tag image') {
+            steps {
+                sh '''
+                mkdir lucy
+                mkdir jeany
+                pwd
+
+                '''
+            }
+        
+        }
+   
+   
+   }
+
+}
