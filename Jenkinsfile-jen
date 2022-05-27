@@ -2,36 +2,35 @@ pipeline {
     agent any
 
     stages {
-        stage('pulling') {
+        stage('build image') {
             steps {
                 sh '''
-                git pull docker:latest
-                '''
-            }
-        }
+                mkdir yvan
+                pwd
+                date
 
-        stage('build the image') {
-            steps {
-                sh '''
-                docker build -t jeanne:001 .
                 '''
             }
+        
         }
+   
+   stage('tag image') {
+            steps {
+                sh '''
+                mkdir lucy
+                mkdir jeany
+                pwd
 
-        stage('Checking images') {
-            steps {
-                sh '''
-                docker images
                 '''
             }
+        
         }
+   
+   
+   }
 
-        stage('Checking container') {
-            steps {
-                sh '''
-                docker run -i --name foko jeanne:001
-                '''
-            }
-        }
-    }
+
+
+
+
 }
