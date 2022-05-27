@@ -1,3 +1,34 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@kmigap 
+devopseasylearning
+/
+maven-project
+Public
+forked from kemvoueric/maven-project
+Code
+Pull requests
+2
+Actions
+Projects
+Wiki
+Security
+Insights
+maven-project/webapp/src/main/webapp/index.jsp
+@devopseasylearning
+devopseasylearning Merge pull request #33 from devopseasylearning/update-pricing
+…
+Latest commit c81e6e6 2 days ago
+ History
+ 4 contributors
+@kemvoueric@devopseasylearning@Galiomid@Amy2900
+400 lines (330 sloc)  27 KB
+   
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,7 +118,7 @@
                 <nav>
                     <ul class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0">
                         <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">Shop</a></li>
-                        <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">About</a></li>
+                        <li><a class="inline-block no-underline hover:text-black hover:underline py-2 px-4" href="#">About EK TECH SOFTWARE SOLUTION Products</a></li>
                     </ul>
                 </nav>
             </div>
@@ -195,23 +226,15 @@
     </div>
 
     <!--	 
-
 Alternatively if you want to just have a single hero
-
 <section class="w-full mx-auto bg-nordic-gray-light flex pt-12 md:pt-0 md:items-center bg-cover bg-right" style="max-width:1600px; height: 32rem; background-image: url('https://images.unsplash.com/photo-1422190441165-ec2956dc9ecc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1600&q=80');">
-
 	<div class="container mx-auto">
-
 		<div class="flex flex-col w-full lg:w-1/2 justify-center items-start  px-6 tracking-wide">
 			<h1 class="text-black text-2xl my-4">Stripy Zig Zag Jigsaw Pillow and Duvet Set</h1>
 			<a class="text-xl inline-block no-underline border-b border-gray-600 leading-relaxed hover:text-black hover:border-black" href="#">products</a>
-
 		</div>
-
 	  </div>
-
 </section>
-
 -->
 
     <section class="bg-white py-8">
@@ -398,3 +421,16 @@ Alternatively if you want to just have a single hero
 </body>
 
 </html>
+© 2022 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+Loading complete
