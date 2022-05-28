@@ -16,12 +16,7 @@ pipeline {
                 script { 
                     properties([
                         parameters([
-			choice(
-                         defaultValue: 'CentOS',
-                         name: 'env',
-                         choices: 'CentOS\Ubuntu\Fedora\Rhel\',
-
-                          ),
+			choice(name: 'CHOICES', choices: ['CentOS', 'Ubuntu', 'Fedora', 'Rhel'], description: ''),
                           
 
                             string(
