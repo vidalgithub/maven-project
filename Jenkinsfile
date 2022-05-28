@@ -19,7 +19,7 @@ pipeline {
     stages {
         stage('Valading code syntax') {
             steps {
-                echo 'Hello Wgdfwgngfmmgjhmghjfwgwfgeorld'
+                echo 'Hello world'
                 sh 'sleep 1'
             }
         }
