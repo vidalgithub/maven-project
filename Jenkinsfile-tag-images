@@ -19,11 +19,7 @@ pipeline {
                 script { 
                     properties([
                         parameters([
-                           string(
-                                defaultValue: 'develop', 
-                                name: 'BranchName', 
-                                trim: true
-                            ),
+                           choice(name: 'BranchName', choices: ['production'], description: ''),
                             
                             string(
                                 defaultValue: '001', 
