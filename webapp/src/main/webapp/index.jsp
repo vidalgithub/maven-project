@@ -133,7 +133,7 @@
                         <div class="flex flex-col w-full lg:w-1/2 md:ml-16 items-center md:items-start px-6 tracking-wide">
 
                             <p class="text-black text-2xl my-4">EK TECH SOFTWARE SOLUTION</p>
-                            <a class="text-xl inline-block no-underline border-b border-gray-600 leading-relaxed hover:text-black hover:border-black" href="#">Click here to for more info about the product
+                            <a class="text-xl inline-block no-underline border-b border-gray-600 leading-relaxed hover:text-black hover:border-black" href="#">Click here to shop at EKTSS
 </a>
 
                         </div>
