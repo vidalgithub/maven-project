@@ -32,6 +32,7 @@ pipeline {
         }
 
 
+        
          stage('Junit report') {
             steps {
                 echo 'Hello World'
