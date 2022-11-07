@@ -11,7 +11,6 @@ pipeline {
      artifactNumToKeepStr: '', daysToKeepStr: '3', numToKeepStr: '5'))
       disableConcurrentBuilds() }
       
-
     stages {
         
        stage('Setup parameters') {
@@ -45,7 +44,6 @@ pipeline {
         }
 
      
-
 
      //////////////////////////////////
        stage('warning') {
