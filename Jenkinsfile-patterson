@@ -67,7 +67,7 @@ pipeline {
             steps {
                sh '''
 	       rm -rf webapp.war
-               rm -rf webapp/target/
+               rm -rf webapp/target/webapp.war
 	      ls -l webapp
               mvn clean
                '''
