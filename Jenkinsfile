@@ -41,7 +41,6 @@ pipeline {
 
 
 
-
         stage('Sonarqube analysis') {
             steps {
                 echo 'Hello World'
